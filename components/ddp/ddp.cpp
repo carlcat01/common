@@ -100,12 +100,12 @@ bool DDPComponent::process_(const uint8_t *payload, uint16_t size) {
   // modified to handle the timecode field.  So far, neither WLED nor xLights
   // follow the header spec in general, and neither sends a timecode field.
   //add offset to used for later packets
-  uint16_t used = 10 + offsetnum;
+  uint16_t used = 10;
 
   // run through all registered effects, each takes required data per their size starting at packet address determined by used.
   for (auto *light_effect : this->light_effects_) {
     //if ( used >= size ) { return false; }
-    uint16_t new_used = light_effect->process_(&payload[0], size, used);
+    uint16_t new_used = light_effect->process_(&payload[0], size, used, offsetnum);
     if (new_used == 0)  { return false; }
     else                { used += new_used; }
   }
