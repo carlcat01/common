@@ -103,12 +103,12 @@ uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t si
 
 //check if packet is later, if so increae number of pixels
 uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
-  num_pixels += (offsetnum/3);
-  used += (offsetnum/3);
+ uint16_t start_index = used + (offsetnum/3);
+ uint8_t end_index = num_pixels + (offsetnum/3);
 
   if ( num_pixels < 1 ) { return 0; }
 
-  ESP_LOGV(TAG, "Applying DDP data for '%s' (size: %d - used: %d - num_pixels: %d)", get_name().c_str(), size, used, num_pixels);
+  ESP_LOGV(TAG, "Applying DDP data for '%s' (size: %d - used: %d - num_pixels: %d) {start: %d - end: %d}", get_name().c_str(), size, used, num_pixels, start_index, end_index);
 
   // will be multiplied by RGB values in scale_* scaling modes
   float multiplier = 1.0f;
@@ -169,7 +169,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
     }
 
     // assign pixel color
-    auto output = (*it)[(i-used)/3];
+    auto output = (*it)[((i-used)+(offsetnum/3))/3];
     output.set_rgb(red, green, blue);
   }
 
