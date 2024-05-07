@@ -107,6 +107,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
   if ( num_pixels < 1 ) { return 0; }
   //if ( offsetnum > 0 ) { return 0; }
 
+  //this debug will break the code for some reason
   //ESP_LOGV(TAG, "Applying DDP data for '%s' (size: %d - used: %d - num_pixels: %d) {offset %d}", get_name().c_str(), size, used, num_pixels, offsetnum);
   
 
@@ -169,7 +170,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
         break;
     }
 
-  uint16_t led_index = (i-used)/3;
+  uint16_t led_index = (i-used+offsetnum)/3;
   //ESP_LOGV(TAG, "LED update: %d, r: %d, g: %d, b: %d", led_index, red, green, blue);
     // assign pixel color
     auto output = (*it)[led_index];
