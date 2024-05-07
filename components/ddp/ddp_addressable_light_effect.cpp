@@ -105,7 +105,7 @@ uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t si
 uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
  uint16_t start_index = used + (offsetnum/3);
  uint16_t end_index = num_pixels + (offsetnum/3);
-  if ( offsetnum > 0 ) { return 0; }
+  //if ( offsetnum > 0 ) { return 0; }
   if ( num_pixels < 1 ) { return 0; }
 
   ESP_LOGV(TAG, "Applying DDP data for '%s' (size: %d - used: %d - num_pixels: %d) {offset %d - start: %d - end: %d}", get_name().c_str(), size, used, num_pixels, offsetnum, start_index, end_index);
@@ -171,6 +171,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
   uint16_t led_index = (i-used)/3;
   //ESP_LOGV(TAG, "LED update: %d", led_index);
     // assign pixel color
+    if ( offsetnum > 0 ) { return 0; }
     auto output = (*it)[led_index];
     output.set_rgb(red, green, blue);
   }
