@@ -83,10 +83,10 @@ bool DDPComponent::process_(const uint8_t *payload, uint16_t size) {
   // screwing up the light effect (flickering).
 
   //Change, offset is needed for multi-packet frames. Offset value will reflect the starting channel point where the packet should be applied. 
-  //if ( payload[4] || payload[5] || payload[6] || payload[7] ) {
-  //  ESP_LOGE(TAG, "Ignoring DDP Packet with non-zero data offset.");
-  //  return false;
-  //}
+  if ( payload[4] || payload[5] || payload[6] || payload[7] ) {
+    ESP_LOGE(TAG, "Ignoring DDP Packet with non-zero data offset.");
+    return false;
+  }
 
   ESP_LOGV(TAG, "DDP packet received (size=%d): - %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x [%02x %02x %02x]", size, payload[0], payload[1], payload[2], payload[3], payload[4], payload[5], payload[6], payload[7], payload[8], payload[9], payload[10], payload[11], payload[12] );
 
