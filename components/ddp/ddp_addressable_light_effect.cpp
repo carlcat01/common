@@ -168,8 +168,8 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
         break;
     }
 
-  uint16_t led_index = (i-used+offsetnum)/3;
-  ESP_LOGV(TAG, "LED update: %d, r: %d, g: %d, b: %d", led_index, red, green, blue);
+  uint16_t led_index = (i-used)/3;
+  //ESP_LOGV(TAG, "LED update: %d, r: %d, g: %d, b: %d", led_index, red, green, blue);
     // assign pixel color
     auto output = (*it)[led_index];
     output.set_rgb(red, green, blue);
