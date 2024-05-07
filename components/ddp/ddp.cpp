@@ -92,7 +92,7 @@ bool DDPComponent::process_(const uint8_t *payload, uint16_t size) {
 
 //get offset value as int
   uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
-
+  ESP_LOGV(TAG, "OffsetNum: %d", offsetnum);
   // first 10 bytes are the header, so consider them used from the get-go
   // if timecode field is used, takes up an additional 4 bytes of header.
   // this component does not handle the timecode field.  If there is a situation
