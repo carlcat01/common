@@ -96,9 +96,9 @@ uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t si
 
 
 #ifdef USE_ESP32
-  uint16_t num_pixels = std::min((int)it->size(), ((size-used)/3));
+  uint16_t num_pixels = std::min((int)it->size(), ((used)/3));
 #else
-  uint16_t num_pixels = min(it->size(), ((size-used)/3));
+  uint16_t num_pixels = min(it->size(), ((used)/3));
 #endif
 
   if ( num_pixels < 1 ) { return 0; }
