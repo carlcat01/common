@@ -105,7 +105,6 @@ uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t si
 uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
  uint16_t start_index = used + (offsetnum/3);
  uint16_t end_index = num_pixels + (offsetnum/3);
- uint16_t offsetpix = (offsetnum/3);
 
   if ( num_pixels < 1 ) { return 0; }
 
@@ -169,7 +168,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
         break;
     }
 
-  uint16_t led_index = (i-used)/3;
+  uint16_t led_index = ((i-used)+offsetnum)/3;
   ESP_LOGV(TAG, "LED update: %d", led_index);
     // assign pixel color
     auto output = (*it)[led_index];
@@ -177,7 +176,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
   }
 
   it->schedule_show();
-  return (num_pixels*3+offsetnum);
+  return (num_pixels*3);
 }
 
 float DDPAddressableLightEffect::scan_packet_and_return_multiplier_(const uint8_t *payload, uint16_t start, uint16_t end) {
