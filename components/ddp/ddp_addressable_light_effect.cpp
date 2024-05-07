@@ -104,6 +104,7 @@ uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t si
 //check if packet is later, if so increae number of pixels
 uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
   num_pixels += (offsetnum/3);
+  used += (offsetnum/3);
 
   if ( num_pixels < 1 ) { return 0; }
 
