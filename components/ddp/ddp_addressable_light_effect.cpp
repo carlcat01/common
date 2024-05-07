@@ -107,10 +107,11 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
   if ( num_pixels < 1 ) { return 0; }
 
   ESP_LOGV(TAG, "Applying DDP data for '%s' (size: %d - used: %d - num_pixels: %d) {offset %d}", get_name().c_str(), size, used, num_pixels, offsetnum);
+  if ( offsetnum > 0 ) { return 0; }
 
   // will be multiplied by RGB values in scale_* scaling modes
   float multiplier = 1.0f;
-/*
+
   // grab scaling multiplier for packet or strip level
   // max out brightness in all but multiply mode, in which brightness is used.
   switch (this->scaling_mode_) {
@@ -128,7 +129,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
     default:
       break; // Multiply mode is default ESPHome behavior, no need to do anything to handle it.
   }
-*/
+
 
   // loop through all pixels being displayed now.
   for (uint16_t i = used; i < used+(num_pixels*3); i+=3) {
