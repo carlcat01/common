@@ -103,7 +103,7 @@ bool DDPComponent::process_(const uint8_t *payload, uint16_t size) {
 
   // run through all registered effects, each takes required data per their size starting at packet address determined by used.
   for (auto *light_effect : this->light_effects_) {
-    //if ( used >= size ) { return false; }
+    if ( used >= size ) { return false; }
     uint16_t new_used = light_effect->process_(&payload[0], size, used);
     if (new_used == 0)  { return false; }
     else                { used += new_used; }
