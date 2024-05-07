@@ -91,7 +91,6 @@ bool DDPComponent::process_(const uint8_t *payload, uint16_t size) {
   ESP_LOGV(TAG, "DDP packet received (size=%d): - %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x [%02x %02x %02x]", size, payload[0], payload[1], payload[2], payload[3], payload[4], payload[5], payload[6], payload[7], payload[8], payload[9], payload[10], payload[11], payload[12] );
 
 //get offset value as int
-  uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
   //ESP_LOGV(TAG, "OffsetNum: %d", offsetnum);
   // first 10 bytes are the header, so consider them used from the get-go
   // if timecode field is used, takes up an additional 4 bytes of header.
@@ -105,7 +104,7 @@ bool DDPComponent::process_(const uint8_t *payload, uint16_t size) {
   // run through all registered effects, each takes required data per their size starting at packet address determined by used.
   for (auto *light_effect : this->light_effects_) {
     //if ( used >= size ) { return false; }
-    uint16_t new_used = light_effect->process_(&payload[0], size, used, offsetnum);
+    uint16_t new_used = light_effect->process_(&payload[0], size, used);
     if (new_used == 0)  { return false; }
     else                { used += new_used; }
   }

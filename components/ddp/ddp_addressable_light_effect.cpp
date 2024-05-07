@@ -75,7 +75,7 @@ void DDPAddressableLightEffect::apply(light::AddressableLight &it, const Color &
 
 }
 
-uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t size, uint16_t used, uint16_t offsetnum) {
+uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t size, uint16_t used) {
 
   // disable gamma on first received packet, not just based on effect being enabled.
   // that way home assistant light can still be used as normal when DDP packets are not
@@ -101,8 +101,9 @@ uint16_t DDPAddressableLightEffect::process_(const uint8_t *payload, uint16_t si
   uint16_t num_pixels = min(it->size(), ((size-used)/3));
 #endif
 
-//add offset to num pixels
-num_pixels += (offsetnum/3)
+//check if packet is later, if so increae number of pixels
+uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] << 16 | (uint8_t)payload[6] << 8 | (uint8_t)payload[7]);
+  num_pixels += (offset/3)
 
   if ( num_pixels < 1 ) { return 0; }
 
