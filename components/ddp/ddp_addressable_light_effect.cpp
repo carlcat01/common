@@ -169,7 +169,7 @@ uint16_t offsetnum = uint16_t((uint8_t)payload[4] << 24 | (uint8_t)payload[5] <<
     }
 
     // assign pixel color
-    auto output = (*it)[((i-used)+(offsetnum/3))/3];
+    auto output = (*it)[((i-used)+offsetnum)/3];
     output.set_rgb(red, green, blue);
   }
 
